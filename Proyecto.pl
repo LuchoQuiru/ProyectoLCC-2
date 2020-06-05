@@ -27,12 +27,12 @@ desplazar(Dir, Num, Cant, Tablero, EvolTablero).
 desplazar_arriba(Num,Cant,Tablero,Rta):-
 	obtener__columna(Num,Tablero,Elems,Tablero2),
 	desplazar_izquierda(Cant,Elems,Elems2),
-	insertar_elementos_columna(Num,Tablero2,Elems2,Rta).
+	insertar_columna(Num,Tablero2,Elems2,Rta).
 
 desplazar_abajo(Num,Cant,Tablero,Rta):-
 	obtener__columna(Num,Tablero,Elems,Tablero2),
 	desplazar_derecha(Cant,Elems,Elems2),
-	insertar_elementos_columna(Num,Tablero2,Elems2,Rta).
+	insertar_columna(Num,Tablero2,Elems2,Rta).
 
 % Obtiene los elementos correspondientes a la columna de la posicion Pos
 obtener_columna(Pos,[L|Ls],Elems,Rta):-
@@ -44,11 +44,11 @@ obtener_columna(Pos,[L|Ls],Elems,Rta):-
 obtener__columna(Pos,[L],[E],[Fila]):-
 	posicion_de_lista(Pos,L,E,Fila).
 
-insertar_elementos_columna(Pos,[Col|Cols],[Elem|Elems],Tablero):-
+insertar_columna(Pos,[Col|Cols],[Elem|Elems],Tablero):-
 	insertar_en_pos(Elem,Col,Pos,Columna2),
-	insertar_elementos_columna(Pos,Cols,Elems,T),
+	insertar_columna(Pos,Cols,Elems,T),
 	insertar_inicio(Columna2,T,Tablero).
-insertar_elementos_columna(_,[],[],[]).
+insertar_columna(_,[],[],[]).
 	
 
 % Elimina el elemento de la posicion Pos y lo retorna
