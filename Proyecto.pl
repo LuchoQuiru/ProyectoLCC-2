@@ -16,7 +16,7 @@
 %		     lo que "movera" los espacios vacios hacia arriba, a la parte superior del tablero.
 %		4. Resultante de rellenar los espacios vacios en Tablero3 con mu~necas de tamanio chico y colores elegidos aleatoriamente.
 
-desplazar(Dir, Num, Cant, Tablero, EvolTablero):-
+desplazar(Dir, Num, Cant, Tablero, EvolTablero).
 	
 
 
