@@ -16,20 +16,20 @@
 %		     lo que "movera" los espacios vacios hacia arriba, a la parte superior del tablero.
 %		4. Resultante de rellenar los espacios vacios en Tablero3 con mu~necas de tamanio chico y colores elegidos aleatoriamente.
 
-desplazar(Dir, Num, Cant, Tablero, EvolTablero).
-
+desplazar(Dir, Num, Cant, Tablero, EvolTablero):-
+	
 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Rotar columna
-desplazar_arriba(Cant,Num,Tablero,Rta):-
+desplazar_arriba(Num,Cant,Tablero,Rta):-
 	quitar_elementos_columna(Num,Tablero,Elems,Tablero2),
 	desplazar_izquierda(Cant,Elems,Elems2),
 	insertar_elementos_columna(Num,Tablero2,Elems2,Rta).
 
-desplazar_abajo(Cant,Num,Tablero,Rta):-
+desplazar_abajo(Num,Cant,Tablero,Rta):-
 	quitar_elementos_columna(Num,Tablero,Elems,Tablero2),
 	desplazar_derecha(Cant,Elems,Elems2),
 	insertar_elementos_columna(Num,Tablero2,Elems2,Rta).
@@ -68,6 +68,11 @@ posicion_de_lista(Pos,[L|Ls],Elem,ListaRet):-
 % Rotar fila
 
 % Rota a Fila Cant veces a la izquierda
+desplazar_izquierda(Num,Cant,[T|Ts],Rta):-
+	obtener_fila(Num,[T|Ts],Fila,Tablero),
+	desplazar_izquierda(Cant,Fila,Fila2),
+	insertar_en_pos(Fila2,Tablero,Num,Rta).
+
 desplazar_izquierda(Cant,Fila,Rta):-
 	Cant > 0,
 	rotar_izquierda(Fila,R),
@@ -80,6 +85,12 @@ rotar_izquierda([H|T], R):-
 	append(T, [H], R).
 
 % Rota a Fila Cant veces a la derecha
+desplazar_derecha(Num,Cant,[T|Ts],Rta):-
+	obtener_fila(Num,[T|Ts],Fila,Tablero),
+	desplazar_derecha(Cant,Fila,Fila2),
+	insertar_en_pos(Fila2,Tablero,Num,Rta).
+
+
 desplazar_derecha(Cant,Fila,Rta):-
 	Cant > 0,
 	ultimo(Fila,U,R),
@@ -107,6 +118,14 @@ insertar_en_pos(Elem,[L|Ls],Pos,Rta):-
 
 insertar_en_pos(Elem,[],_,[Elem]).
 
+% Retona la fila por una parte y el tablero sin ella por otro
+obtener_fila(Num,[T|Ts],T,Ts):-
+	Num2 is Num-1,
+	Num2 == 0.
+obtener_fila(Num,[T|Ts],Fila,Tab):-
+	Num2 is Num-1,
+	obtener_fila(Num2,Ts,Fila,Tab2),
+	insertar_inicio(T,Tab2,Tab).
 
 insertar_inicio(X,L,[X|L]).
 	
