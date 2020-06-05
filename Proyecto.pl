@@ -1,5 +1,5 @@
 % Almaraz Fabricio, Quiruga Luciano
-:- use rendering(table).
+:- use_rendering(table).
 
 
 % Dir  -> Especifica la direccion del desplazamiento. Izq, der para fila, arriba o abajo para columna.
@@ -21,6 +21,51 @@ desplazar(Dir, Num, Cant, Tablero, EvolTablero).
 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Rotar columna
+desplazar_arriba(Cant,Num,Tablero,Rta):-
+	quitar_elementos_columna(Num,Tablero,Elems,Tablero2),
+	desplazar_izquierda(Cant,Elems,Elems2),
+	insertar_elementos_columna(Num,Tablero2,Elems2,Rta).
+
+desplazar_abajo(Cant,Num,Tablero,Rta):-
+	quitar_elementos_columna(Num,Tablero,Elems,Tablero2),
+	desplazar_derecha(Cant,Elems,Elems2),
+	insertar_elementos_columna(Num,Tablero2,Elems2,Rta).
+
+% Obtiene los elementos correspondientes a la columna de la posicion Pos
+quitar_elementos_columna(Pos,[L|Ls],Elems,Rta):-
+	posicion_de_lista(Pos,L,E,Fila),
+	quitar_elementos_columna(Pos,Ls,E2,R),
+	insertar_inicio(Fila,R,Rta),
+	insertar_inicio(E,E2,Elems).
+
+quitar_elementos_columna(Pos,[L],[E],[Fila]):-
+	posicion_de_lista(Pos,L,E,Fila).
+
+insertar_elementos_columna(Pos,[Col|Cols],[Elem|Elems],Tablero):-
+	insertar_en_pos(Elem,Col,Pos,Columna2),
+	insertar_elementos_columna(Pos,Cols,Elems,T),
+	insertar_inicio(Columna2,T,Tablero).
+insertar_elementos_columna(_,[],[],[]).
+	
+
+% Elimina el elemento de la posicion Pos y lo retorna
+posicion_de_lista(Pos,[L|Ls],Elem,Lista):-
+	P is Pos-1,
+	P == 0,
+	Elem = L,
+	Lista = Ls.
+posicion_de_lista(Pos,[L|Ls],Elem,ListaRet):-
+	P is Pos-1,
+	posicion_de_lista(P,Ls,Elem,Lista),
+	insertar_inicio(L,Lista,ListaRet).
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Rotar fila
 
 % Rota a Fila Cant veces a la izquierda
 desplazar_izquierda(Cant,Fila,Rta):-
@@ -48,4 +93,20 @@ ultimo([L],L,[]).
 ultimo([L|Ls],U,[L|R]):-
 	ultimo(Ls,U,R).
 
+	
+%insertar_en_pos(Elem,[],5,[Elem]).
+insertar_en_pos(Elem,[L|Ls],Pos,Rta):-
+	P is Pos-1,
+	P == 0,
+	insertar_inicio(Elem,[L|Ls],Rta).
+
+insertar_en_pos(Elem,[L|Ls],Pos,Rta):-
+	P is Pos-1,
+	insertar_en_pos(Elem,Ls,P,R),
+	insertar_inicio(L,R,Rta).
+
+insertar_en_pos(Elem,[],_,[Elem]).
+
+
 insertar_inicio(X,L,[X|L]).
+	
