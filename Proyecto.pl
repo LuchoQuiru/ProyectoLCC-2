@@ -25,23 +25,23 @@ desplazar(Dir, Num, Cant, Tablero, EvolTablero).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Rotar columna
 desplazar_arriba(Num,Cant,Tablero,Rta):-
-	obtener__columna(Num,Tablero,Elems,Tablero2),
+	obtener_columna(Num,Tablero,Elems,Tablero2),
 	desplazar_izquierda(Cant,Elems,Elems2),
 	insertar_columna(Num,Tablero2,Elems2,Rta).
 
 desplazar_abajo(Num,Cant,Tablero,Rta):-
-	obtener__columna(Num,Tablero,Elems,Tablero2),
+	obtener_columna(Num,Tablero,Elems,Tablero2),
 	desplazar_derecha(Cant,Elems,Elems2),
 	insertar_columna(Num,Tablero2,Elems2,Rta).
 
 % Obtiene los elementos correspondientes a la columna de la posicion Pos
 obtener_columna(Pos,[L|Ls],Elems,Rta):-
 	posicion_de_lista(Pos,L,E,Fila),
-	obtener__columna(Pos,Ls,E2,R),
+	obtener_columna(Pos,Ls,E2,R),
 	insertar_inicio(Fila,R,Rta),
 	insertar_inicio(E,E2,Elems).
 
-obtener__columna(Pos,[L],[E],[Fila]):-
+obtener_columna(Pos,[L],[E],[Fila]):-
 	posicion_de_lista(Pos,L,E,Fila).
 
 insertar_columna(Pos,[Col|Cols],[Elem|Elems],Tablero):-
