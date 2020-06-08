@@ -129,3 +129,20 @@ obtener_fila(Num,[T|Ts],Fila,Tab):-
 
 insertar_inicio(X,L,[X|L]).
 	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Random
+% Retorna una mamushka random de tamaño pequeño
+mamushka_random(MR):-
+	random(1,4,R),
+	mamushka_random(R,MR).
+
+mamushka_random(Random,MR):-
+	Random == 1,
+	MR = a1.
+mamushka_random(Random,MR):-
+	Random == 2,
+	MR = v1.
+mamushka_random(Random,MR):-
+	Random == 3,
+	MR = r1.
