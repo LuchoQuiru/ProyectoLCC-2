@@ -16,9 +16,23 @@
 %		     lo que "movera" los espacios vacios hacia arriba, a la parte superior del tablero.
 %		4. Resultante de rellenar los espacios vacios en Tablero3 con mu~necas de tamanio chico y colores elegidos aleatoriamente.
 
-desplazar(Dir, Num, Cant, Tablero, EvolTablero).
+desplazar(Dir, Num, Cant, Tablero, EvolTablero):-
+	desplazarAux(Dir,Num,Cant,Tablero,EvolTablero).
 	
 
+
+desplazarAux(Dir,Num,Cant,Tablero,Ret):-
+	Dir == "izq",
+	desplazar_izquierda(Num,Cant,Tablero,Ret).
+desplazarAux(Dir,Num,Cant,Tablero,Ret):-
+	Dir == "der",
+	desplazar_derecha(Num,Cant,Tablero,Ret).
+desplazarAux(Dir,Num,Cant,Tablero,Ret):-
+	Dir == "arriba",
+	desplazar_arriba(Num,Cant,Tablero,Ret).
+desplazarAux(Dir,Num,Cant,Tablero,Ret):-
+	Dir == "abajo",
+	desplazar_abajo(Num,Cant,Tablero,Ret).
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -131,8 +145,8 @@ insertar_inicio(X,L,[X|L]).
 	
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Random
 % Retorna una mamushka random de tamaño pequeño
+% La funcion random la provee Prolog
 mamushka_random(MR):-
 	random(1,4,R),
 	mamushka_random(R,MR).
